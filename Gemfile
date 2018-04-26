@@ -20,6 +20,7 @@ group :test do
   gem 'simp-rake-helpers', ENV.fetch('SIMP_RAKE_HELPERS_VERSION', '~> 5.2')
   gem 'facterdb'
   gem 'danger'
+  #gem 'danger-changelog'
 end
 
 group :development do

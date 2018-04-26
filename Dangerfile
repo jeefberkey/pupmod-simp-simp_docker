@@ -1,8 +1,13 @@
 # Dangerfile!
 # vi:syntax=ruby
 
-# Sometimes it's a README fix, or something like that - which isn't relevant for
-# including in a project's CHANGELOG for example
+#Danger::Changelog.configure do |config|
+# config.filename = 'CHANGELOG'
+#end
+#changelog.have_you_updated_changelog?
+#changelog.is_changelog_format_correct?
+
+
 declared_trivial = github.pr_title.include? '#trivial'
 
 has_puppet_changes = !git.modified_files.grep(/.pp$/).empty?
@@ -15,8 +20,6 @@ warn('Be sure to run the acceptance tests!') if has_acceptance_changes
 if has_puppet_changes && !has_spec_changes
   warn('There are changes in manifests, but not tests. That\'s OK as long as you\'re refactoring existing code.', sticky: false)
 end
-
-changelog.have_you_updated_changelog?
 
 warn('PR is classed as Work in Progress') if github.pr_title.include? 'WIP'
 
@@ -35,7 +38,7 @@ unless github.api.organization_member?('simp', github.pr_author)
 end
 
 string_reference = `puppet strings generate --format markdown`
-unless string_reference.include? '100.00% documented'
+if ! string_reference.include? '100.00% documented'
   fail('Parts of the code are not documented! See the output of `puppet strings generate --format markdown`')
 elsif string_reference.include? 'warning'
   warn('There are some warnings from puppet strings! See the output of `puppet strings generate --format markdown`')
