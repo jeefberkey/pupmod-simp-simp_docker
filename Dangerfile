@@ -7,6 +7,7 @@
 #changelog.have_you_updated_changelog?
 #changelog.is_changelog_format_correct?
 
+message('You may have to manually re-run Travis to get these messages to update')
 
 declared_trivial = github.pr_title.include? '#trivial'
 
@@ -31,7 +32,7 @@ if github.pr_body.length < 5
 end
 
 if !git.modified_files.include?('CHANGELOG') && has_puppet_changes
-  warn('Please include a CHANGELOG entry when changing version).')
+  warn('Please include a CHANGELOG entry when changing version.')
 end
 
 
